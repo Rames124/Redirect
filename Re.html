@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Redirect Link Generator</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input { padding: 5px; width: 400px; }
+    button { padding: 8px; margin-top: 10px; }
+    p { margin-top: 15px; }
+</style>
+</head>
+<body>
+
+<script>
+// Check if we're in redirect mode (has ?to=...)
+const params = new URLSearchParams(window.location.search);
+const target = params.get('to');
+
+if (target) {
+    // Redirect immediately
+    window.location.href = target;
+} else {
+    // Show the generator form
+    document.write(`
+        <h2>Redirect Link Generator</h2>
+        <label>Fake-looking link text:</label><br>
+        <input type="text" id="fakeLink" placeholder="https://youtube.com/watch?v=fakeid"><br><br>
+        <label>Real destination link:</label><br>
+        <input type="text" id="realLink" placeholder="https://youtube.com/watch?v=realid"><br><br>
+        <button onclick="generate()">Generate Link</button>
+        <p id="output"></p>
+    `);
+}
+
+// Function to generate the shareable link
+function generate() {
+    const fake = document.getElementById("fakeLink").value.trim();
+    const real = document.getElementById("realLink").value.trim();
+
+    if (!fake || !real) {
+        alert("Please enter both URLs.");
+        return;
+    }
+
+    const encoded = encodeURIComponent(real);
+    const pageUrl = window.location.origin + window.location.pathname;
+    const shareableUrl = pageUrl + "?to=" + encoded;
+
+    document.getElementById("output").innerHTML = 
+        `<a href="${shareableUrl}" target="_blank">${fake}</a><br>
+         <small>Share this link: ${shareableUrl}</small>`;
+}
+</script>
+
+</body>
+</html>
