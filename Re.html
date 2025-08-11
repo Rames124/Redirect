@@ -45,7 +45,7 @@ function generate() {
 
     const encoded = encodeURIComponent(real);
     const pageUrl = window.location.origin + window.location.pathname;
-    const shareableUrl = pageUrl + "?to=" + encoded;
+    const shareableUrl = "https://rames124.github.io/Redirect/?to=" + encoded;
 
     document.getElementById("output").innerHTML = 
         `<a href="${shareableUrl}" target="_blank">${fake}</a><br>
